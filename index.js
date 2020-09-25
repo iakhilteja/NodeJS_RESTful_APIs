@@ -3,6 +3,24 @@ const url = require('url');
 const config = require('./config');
 const stringDecoder = require('string_decoder').StringDecoder;
 const port = config.httpPort;
+const fs = require('fs');
+const _data = require('./lib/data');
+
+// _data.create('test', 'newFile', {'foo':'bar'},(err)=>{
+// console.log('This is an error : ',err);
+// });
+
+// _data.read('test', 'newFile', (err,data)=>{
+//     console.log('This is an error : ',err,data);
+// });
+    
+// _data.update('test','newFile', {'akhil':'teja'},(err)=>{
+//     console.log('There is an error : ',err);
+// })
+
+_data.delete('test','newFile',(err,data)=>{
+    console.log('this is an error: ',err);
+})
 
 const server = http.createServer((req,res)=>{
   const parsedURL = url.parse(req.url, true);
