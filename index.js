@@ -5,6 +5,8 @@ const stringDecoder = require('string_decoder').StringDecoder;
 const port = config.httpPort;
 const fs = require('fs');
 const _data = require('./lib/data');
+const handlers = require('./lib/handlers');
+const helpers = require("./lib/helpers");
 
 // _data.create('test', 'newFile', {'foo':'bar'},(err)=>{
 // console.log('This is an error : ',err);
@@ -18,9 +20,9 @@ const _data = require('./lib/data');
 //     console.log('There is an error : ',err);
 // })
 
-_data.delete('test','newFile',(err,data)=>{
-    console.log('this is an error: ',err);
-})
+// _data.delete('test','newFile',(err,data)=>{
+//     console.log('this is an error: ',err);
+// })
 
 const server = http.createServer((req,res)=>{
   const parsedURL = url.parse(req.url, true);
@@ -32,7 +34,6 @@ const server = http.createServer((req,res)=>{
   const decoder = new stringDecoder('utf-8');
   let buffer = '';
 
-    // console.log(headers);
     req.on('data', (data)=>{
         buffer += decoder.write(data);
     });
@@ -44,7 +45,7 @@ const server = http.createServer((req,res)=>{
             "queryStringObject" : queryStringObject,
             "method" : method,
             "headers" : headers,
-            "payload" : buffer
+            "payload" : helpers.parseJsonToObject(buffer)
         }
         chosenHandler(data, (statusCode, payload)=>{
             statusCode = typeof(statusCode == 'number') ? statusCode :200;
@@ -63,13 +64,6 @@ const server = http.createServer((req,res)=>{
 server.listen(port, ()=>{
     console.log(`Server Started on ${port} in ${config.envName} mode`);
 });
-const  handlers = {};
-handlers.users = (data,callback) =>{
-    callback(406,{'name':'Akhilll'});
-};
-handlers.notFound = (data,callback)=>{
-    callback(404, {'status': 'Not Found dude'});
-}
 
 
 const router  = {

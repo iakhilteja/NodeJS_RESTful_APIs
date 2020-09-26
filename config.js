@@ -3,19 +3,18 @@ const environments = {};
 
 environments.production = {
     'httpPort' : 5000,
-    'envName' : 'production'
+    'envName' : 'production',
+    'hashingSecret' : 'theHackingSchool'
 }
 
 environments.dev = {
 'httpPort' : 3000,
-'envName' : 'development'
+'envName' : 'development',
+'hashingSecret' : 'theHackingSchool'
 }
 
 
-//Decide which Environment to be exported
 const currentEnvironment = typeof(process.env.NODE_ENV) == 'string' ? process.env.NODE_ENV.toLowerCase() : '';
-
-//Check that the current Environment is one of the environments above, if not default to staging
 
 const environmentToExport = typeof(environments[currentEnvironment]) == 'object' ? environments[currentEnvironment] : environments.dev;
 
