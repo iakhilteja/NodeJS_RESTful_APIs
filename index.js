@@ -51,6 +51,7 @@ server.listen(port, () => {
 
 const router = {
     "users": handlers.users,
-    "/": handlers.home,
-    "allusers" : handlers.allusers
+    "": handlers.home,
+    "allusers" : handlers.allusers,
+    "hobby":handlers.hobby
 }
